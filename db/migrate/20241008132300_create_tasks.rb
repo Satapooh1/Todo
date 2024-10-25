@@ -3,6 +3,7 @@ class CreateTasks < ActiveRecord::Migration[7.2]
     create_table :tasks do |t|
       t.string :title
       t.string :status, default: 'incomplete'
+      t.references :category, foreign_key: true
 
       t.timestamps
     end

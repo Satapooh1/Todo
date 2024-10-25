@@ -1,36 +1,25 @@
-<div class="c">
+<div class="c">  
   <div class="container">
     <h1>TODOS</h1>
 
-    <!-- Tabs -->
-    <div>
-        <button>Incomplete</button>
-        <button>Complete</button>
-    </div>
-    
     <div class="task">
-      <!-- Form for adding task -->
       <%= form_with model: @task, local: true do |form| %>
-          <div>
-            <%= form.text_field :title, id: "task_name", placeholder: "Enter task name" %>
-            <%= form.submit 'Create Todo' %>
-          </div>
+        <div>
+          <%= form.text_field :title, placeholder: "Enter task name" %>
+          <%= form.collection_select :category_id, Category.all, :id, :name, prompt: 'Select a category' %>
+          <%= form.submit 'Create Todo' %>
+        </div>
       <% end %>
     </div>  
 
-    <!-- Task List -->
-    <div class = taskcon>
-      <% @tasks.each do |task| %>
-        <li>
-          <span><%= task.title %></span>
-          
-          <!-- Button to mark task as complete -->
-          <%= link_to '✔️', complete_task_path(task), method: :patch, class: 'task-button' %>
-
-          <!-- Button to delete task -->
-          <%= link_to '❌', class: 'task-button' %>
-        </li>
-      <% end %>
+    <div data-controller="task">
+      <div class="taskcon" data-action="turbo:submit-end->task#reload">
+        <ul>
+          <% @tasks.each do |task| %>
+            <%= render partial: "tasks/task", locals: { task: task } %>
+          <% end %>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,5 @@
+<li id="task_<%= task.id %>">
+  <span><%= task.title %></span>
+  <%= link_to '✔️', complete_task_path(task), method: :patch, class: 'task-button' %>
+  <%= link_to '❌', task_path(task), method: :delete, class: 'task-button', data: { turbo_method: :delete } %>
+</li>
